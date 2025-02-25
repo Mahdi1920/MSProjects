@@ -24,7 +24,6 @@ public class IGenericServiceImpl<T,D> implements IGenericService<T> {
 	@Override
 	@Transactional
 	public T update(T dto) {
-		//T entity = mapper.toDto(repository.findById(mapper.toEntity(dto).g));
 		return mapper.toDto(repository.save(mapper.toEntity(dto)));
 	}
 

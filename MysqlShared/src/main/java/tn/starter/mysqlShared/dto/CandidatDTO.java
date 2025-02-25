@@ -6,6 +6,6 @@ import lombok.With;
 import java.time.Instant;
 
 @Builder
-@With
+//@With
 public record CandidatDTO(long id , String nom , String prenom , Integer nbQuiz , Instant createdAt,Instant updatedAt) {
 }
