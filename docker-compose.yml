@@ -30,8 +30,12 @@ services:
     restart: always
     ports:
       - "8888:8888"
+    env_file:
+      - .env
     environment:
-      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI:"https://github.com/Mahdi1920/config.git"
+      - spring_cloud_config_server_git_uri=${GIT_URI}
+      - spring_cloud_config_server_git_username=${GIT_USERNAME}
+      - spring_cloud_config_server_git_password=${GIT_TOKEN}
     volumes:
       - config-server:/config-server
     networks:
@@ -51,6 +55,7 @@ services:
   candidat-ms:
     depends_on:
       - discovery-server
+      - gateway-api
       - mysqldb
       - config-server
     image: mchabbouh/candidat-ms:0.0.1
@@ -75,6 +80,7 @@ services:
   quiz-ms:
     depends_on:
       - discovery-server
+      - gateway-api
       - mongodb
       - config-server
     image: mchabbouh/quiz-ms:0.0.1
