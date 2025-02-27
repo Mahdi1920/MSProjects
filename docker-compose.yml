@@ -50,7 +50,7 @@ services:
       - ms
   candidat-ms:
     depends_on:
-#      - discovery-server
+      - discovery-server
       - mysqldb
       - config-server
     image: mchabbouh/candidat-ms:0.0.1
@@ -74,7 +74,7 @@ services:
     tty: true
   quiz-ms:
     depends_on:
-#      - discovery-server
+      - discovery-server
       - mongodb
       - config-server
     image: mchabbouh/quiz-ms:0.0.1
