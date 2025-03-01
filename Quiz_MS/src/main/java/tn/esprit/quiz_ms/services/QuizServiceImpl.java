@@ -8,5 +8,5 @@ import tn.starter.mongoShared.services.IGenericServiceImpl;
 
 @Service
 @AllArgsConstructor
-public class QuizServiceImpl extends IGenericServiceImpl<QuizDTO, Quiz> implements IQuizService{
+public class QuizServiceImpl extends IGenericServiceImpl<QuizDTO, Quiz,String> implements IQuizService{
 }

@@ -5,7 +5,7 @@ import tn.starter.mysqlShared.dto.CandidatDTO;
 import tn.starter.mysqlShared.dto.QuizDTO;
 import tn.starter.mysqlShared.services.IGenericService;
 
-public interface ICandidatService extends IGenericService<CandidatDTO> {
+public interface ICandidatService extends IGenericService<CandidatDTO,Long> {
 	QuizDTO getQuizById(String id);
 	Candidat updatecandidat(Candidat c);
 

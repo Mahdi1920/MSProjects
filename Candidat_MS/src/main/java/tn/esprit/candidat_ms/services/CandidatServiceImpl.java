@@ -11,7 +11,7 @@ import tn.starter.mysqlShared.services.IGenericServiceImpl;
 
 @Service
 @RequiredArgsConstructor
-public class CandidatServiceImpl extends IGenericServiceImpl<CandidatDTO,Candidat> implements ICandidatService{
+public class CandidatServiceImpl extends IGenericServiceImpl<CandidatDTO,Candidat,Long> implements ICandidatService{
 	private final QuizClient quizClient;
 	private  final CandidatRepository repository;
 	@Override

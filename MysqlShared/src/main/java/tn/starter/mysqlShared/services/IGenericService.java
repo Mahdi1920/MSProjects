@@ -2,10 +2,10 @@ package tn.starter.mysqlShared.services;
 
 import java.util.List;
 
-public interface IGenericService<T> {
-	T add(T dto);
-	T update(T dto);
-	T retrieveById(long id);
-	List<T> retrieveAll();
-	void delete(long id);
+public interface IGenericService<DTO,ID> {
+	DTO add(DTO dto);
+	DTO update(DTO dto);
+	DTO retrieveById(ID id);
+	List<DTO> retrieveAll();
+	void delete(ID id);
 }

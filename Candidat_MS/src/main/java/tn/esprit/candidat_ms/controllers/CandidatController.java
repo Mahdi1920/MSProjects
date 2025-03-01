@@ -11,7 +11,7 @@ import tn.starter.mysqlShared.dto.QuizDTO;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/candidat")
-public class CandidatController extends GenericController<CandidatDTO> {
+public class CandidatController extends GenericController<CandidatDTO,Long> {
 	private final ICandidatService service;
 	@GetMapping("/getQuizById/{id}")
 	public QuizDTO getQuizById(@PathVariable String id) {

@@ -8,6 +8,6 @@ import tn.starter.mongoShared.dto.QuizDTO;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/quiz")
-public class QuizController extends GenericController<QuizDTO> {
+public class QuizController extends GenericController<QuizDTO,String> {
 
 }
