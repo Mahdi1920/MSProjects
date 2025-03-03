@@ -31,7 +31,7 @@ services:
     ports:
       - "8888:8888"
     env_file:
-      - ConfigServer/.env
+      - .env
     environment:
       - spring_cloud_config_server_git_uri=${GIT_URI}
       - spring_cloud_config_server_git_username=${GIT_USERNAME}
@@ -41,8 +41,8 @@ services:
     networks:
       - ms
   discovery-server:
-#    depends_on:
-#      - config-server
+    depends_on:
+      - config-server
     image: mchabbouh/discovery-server:0.0.1
     container_name: discovery-server
     restart: always
