@@ -13,7 +13,7 @@
         <module name="MongoShared" />
         <module name="GatewayAPI" />
       </profile>
-      <profile name="Annotation profile for Quiz_MS" enabled="true">
+      <profile name="Annotation profile for Candidat_MS" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -22,8 +22,8 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
         </processorPath>
-        <module name="Quiz_MS" />
         <module name="Candidat_MS" />
+        <module name="Quiz_MS" />
       </profile>
     </annotationProcessing>
   </component>
