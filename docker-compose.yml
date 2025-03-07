@@ -58,8 +58,12 @@ services:
       - gateway-api
       - mysqldb
       - config-server
-    image: mchabbouh/candidat-ms:0.0.1
-    container_name: candidat-ms
+      - quiz-ms
+      - keycloak
+#    image: mchabbouh/candidat-ms:1.0
+    image: mchabbouh/candidat-ms:2.0
+#    container_name: candidat-ms
+    container_name: candidat-ms2
     restart: always
     ports:
       - "8082:8082"
@@ -68,9 +72,12 @@ services:
       - spring.datasource.username=root
       - spring.datasource.password=
       - spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
-      - spring.jpa.hibernate.ddl-auto" = update
+      - spring.jpa.hibernate.ddl-auto= update
       - eureka.client.serviceUrl.defaultZone= http://discovery-server:8761/eureka/
       - spring.config.import=optional:configserver:http://config-server:8888
+      - SPRING.SECURITY.OAUTH2.RESOURCESERVER.JWT.ISSUER-URI=http://keycloak:8080/realms/candidats-quizs
+      - SPRING.SECURITY.OAUTH2.RESOURCESERVER.JWT.JWK-SET-URI=http://keycloak:8080/realms/candidats-quizs/protocol/openid-connect/certs
+
     volumes:
       - candidat-ms:/candidat-ms
     networks:
@@ -83,8 +90,11 @@ services:
       - gateway-api
       - mongodb
       - config-server
-    image: mchabbouh/quiz-ms:0.0.1
-    container_name: quiz-ms
+      - keycloak
+#    image: mchabbouh/quiz-ms:1.0
+    image: mchabbouh/quiz-ms:2.0
+#    container_name: quiz-ms
+    container_name: quiz-ms2
     restart: always
     ports:
       - "8081:8081"
@@ -92,6 +102,9 @@ services:
       - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/Quiz_MS
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - SPRING_CONFIG_IMPORT=configserver:http://config-server:8888/
+      - SPRING.SECURITY.OAUTH2.RESOURCESERVER.JWT.ISSUER-URI=http://keycloak:8080/realms/candidats-quizs
+      - SPRING.SECURITY.OAUTH2.RESOURCESERVER.JWT.JWK-SET-URI=http://keycloak:8080/realms/candidats-quizs/protocol/openid-connect/certs
+
     volumes:
       - quiz-ms:/quiz-ms
     networks:
@@ -113,6 +126,36 @@ services:
       - gateway-api:/gateway
     networks:
       - ms
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak1
+    ports:
+      - "8080:8080"
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://postgres:5432/keycloak
+      - KC_DB_USERNAME=keycloak
+      - KC_DB_PASSWORD=keycloak
+    command: start-dev
+    depends_on:
+      - postgres
+    networks:
+      - ms
+  postgres:
+    image: postgres:15
+    container_name: keycloak-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=keycloak
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=keycloak
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ms
 volumes:
   mysql-db :
   mongodb :
@@ -121,5 +164,6 @@ volumes:
   gateway-api :
   discovery-server :
   config-server :
+  postgres_data:
 networks:
   ms:
