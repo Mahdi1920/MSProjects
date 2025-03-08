@@ -3,6 +3,7 @@ package tn.esprit.candidat_ms.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.candidat_ms.entities.Candidat;
+import tn.esprit.candidat_ms.kafka.KafkaProducerService;
 import tn.esprit.candidat_ms.services.ICandidatService;
 import tn.starter.mysqlShared.controllers.GenericController;
 import tn.starter.mysqlShared.dto.CandidatDTO;
@@ -13,6 +14,7 @@ import tn.starter.mysqlShared.dto.QuizDTO;
 @RequestMapping("/api/candidat")
 public class CandidatController extends GenericController<CandidatDTO,Long> {
 	private final ICandidatService service;
+	private final KafkaProducerService kafkaProducerService;
 	@GetMapping("/getQuizById/{id}")
 	public QuizDTO getQuizById(@PathVariable String id) {
 		return service.getQuizById(id);
@@ -21,4 +23,9 @@ public class CandidatController extends GenericController<CandidatDTO,Long> {
 	public Candidat updatecandidat(@RequestBody Candidat c) {
 		return service.updatecandidat(c);
 	}
+	@PostMapping("/add1")
+	public Candidat addcandidat(@RequestBody Candidat c) {
+		return service.addCandidat(c);
+	}
+
 }

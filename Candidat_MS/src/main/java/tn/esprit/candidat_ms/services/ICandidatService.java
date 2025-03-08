@@ -8,5 +8,5 @@ import tn.starter.mysqlShared.services.IGenericService;
 public interface ICandidatService extends IGenericService<CandidatDTO,Long> {
 	QuizDTO getQuizById(String id);
 	Candidat updatecandidat(Candidat c);
-
+	Candidat addCandidat(Candidat c);
 }
