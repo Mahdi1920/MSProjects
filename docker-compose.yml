@@ -59,11 +59,11 @@ services:
       - mysqldb
       - config-server
       - quiz-ms
-#      - keycloak
-    image: mchabbouh/candidat-ms:1.0
-#    image: mchabbouh/candidat-ms:2.0
-    container_name: candidat-ms
-#    container_name: candidat-ms2
+      - keycloak
+#    image: mchabbouh/candidat-ms:1.0
+    image: mchabbouh/candidat-ms:2.0
+#    container_name: candidat-ms
+    container_name: candidat-ms2
     restart: always
     ports:
       - "8082:8082"
@@ -75,8 +75,8 @@ services:
       - spring.jpa.hibernate.ddl-auto= update
       - eureka.client.serviceUrl.defaultZone= http://discovery-server:8761/eureka/
       - spring.config.import=optional:configserver:http://config-server:8888
-#      - SPRING.SECURITY.OAUTH2.RESOURCESERVER.JWT.ISSUER-URI=http://keycloak:8080/realms/candidats-quizs
-#      - SPRING.SECURITY.OAUTH2.RESOURCESERVER.JWT.JWK-SET-URI=http://keycloak:8080/realms/candidats-quizs/protocol/openid-connect/certs
+      - SPRING.SECURITY.OAUTH2.RESOURCESERVER.JWT.ISSUER-URI=http://keycloak:8080/realms/candidats-quizs
+      - SPRING.SECURITY.OAUTH2.RESOURCESERVER.JWT.JWK-SET-URI=http://keycloak:8080/realms/candidats-quizs/protocol/openid-connect/certs
       - spring.kafka.bootstrap-servers=kafka:9095
       - spring.kafka.consumer.group-id=my-group
       - spring.kafka.consumer.auto-offset-reset=earliest
@@ -93,11 +93,11 @@ services:
       - gateway-api
       - mongodb
       - config-server
-#      - keycloak
-    image: mchabbouh/quiz-ms:1.0
-#    image: mchabbouh/quiz-ms:2.0
-    container_name: quiz-ms
-#    container_name: quiz-ms2
+      - keycloak
+#    image: mchabbouh/quiz-ms:1.0
+    image: mchabbouh/quiz-ms:2.0
+#    container_name: quiz-ms
+    container_name: quiz-ms2
     restart: always
     ports:
       - "8081:8081"
@@ -105,8 +105,8 @@ services:
       - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/Quiz_MS
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - SPRING_CONFIG_IMPORT=configserver:http://config-server:8888/
-#      - SPRING.SECURITY.OAUTH2.RESOURCESERVER.JWT.ISSUER-URI=http://localhost:8080/realms/candidats-quizs
-#      - SPRING.SECURITY.OAUTH2.RESOURCESERVER.JWT.JWK-SET-URI=http://localhost:8080/realms/candidats-quizs/protocol/openid-connect/certs
+      - SPRING.SECURITY.OAUTH2.RESOURCESERVER.JWT.ISSUER-URI=http://localhost:8080/realms/candidats-quizs
+      - SPRING.SECURITY.OAUTH2.RESOURCESERVER.JWT.JWK-SET-URI=http://localhost:8080/realms/candidats-quizs/protocol/openid-connect/certs
       - spring.kafka.bootstrap-servers=kafka:9095
       - spring.kafka.consumer.group-id=my-group
       - spring.kafka.consumer.auto-offset-reset=earliest
@@ -132,36 +132,36 @@ services:
       - gateway-api:/gateway
     networks:
       - ms
-#  keycloak:
-#    image: quay.io/keycloak/keycloak:latest
-#    container_name: keycloak1
-#    ports:
-#      - "8080:8080"
-#    environment:
-#      - KEYCLOAK_ADMIN=admin
-#      - KEYCLOAK_ADMIN_PASSWORD=admin
-#      - KC_DB=postgres
-#      - KC_DB_URL=jdbc:postgresql://postgres:5432/keycloak
-#      - KC_DB_USERNAME=keycloak
-#      - KC_DB_PASSWORD=keycloak
-#    command: start-dev
-#    depends_on:
-#      - postgres
-#    networks:
-#      - ms
-#  postgres:
-#    image: postgres:15
-#    container_name: keycloak-db
-#    ports:
-#      - "5432:5432"
-#    environment:
-#      - POSTGRES_DB=keycloak
-#      - POSTGRES_USER=keycloak
-#      - POSTGRES_PASSWORD=keycloak
-#    volumes:
-#      - postgres_data:/var/lib/postgresql/data
-#    networks:
-#      - ms
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak1
+    ports:
+      - "8080:8080"
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://postgres:5432/keycloak
+      - KC_DB_USERNAME=keycloak
+      - KC_DB_PASSWORD=keycloak
+    command: start-dev
+    depends_on:
+      - postgres
+    networks:
+      - ms
+  postgres:
+    image: postgres:15
+    container_name: keycloak-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=keycloak
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=keycloak
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ms
   zookeeper:
     image: wurstmeister/zookeeper:latest
     container_name: zookeeper1
@@ -169,7 +169,6 @@ services:
       - "2181:2181"
     networks:
       - ms
-
   kafka:
     image: wurstmeister/kafka:latest
     container_name: kafka1
